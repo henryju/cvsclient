@@ -42,18 +42,27 @@
 
 package org.netbeans.lib.cvsclient.file;
 
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
+
+import junit.framework.TestCase;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import org.junit.Test;
-import org.netbeans.junit.NbTestCase;
 
 /**
  *
  * @author Ondrej Vrabec
  */
-public class DefaultTransmitTextFilePreprocessorTest extends NbTestCase {
+public class DefaultTransmitTextFilePreprocessorTest extends TestCase {
+  
+    @Rule
+    public TemporaryFolder temp = new TemporaryFolder();
+  
     private String prevEndings;
     private static final int CHUNK_SIZE = DefaultTransmitTextFilePreprocessor.CHUNK_SIZE;
 
@@ -64,6 +73,7 @@ public class DefaultTransmitTextFilePreprocessorTest extends NbTestCase {
     @Override
     protected void setUp () throws Exception {
         super.setUp();
+        temp.create();
         prevEndings = System.getProperty("line.separator");
         System.setProperty("line.separator", "\r\n");
     }
@@ -71,12 +81,13 @@ public class DefaultTransmitTextFilePreprocessorTest extends NbTestCase {
     @Override
     protected void tearDown () throws Exception {
         System.setProperty("line.separator", prevEndings);
+        temp.delete();
         super.tearDown();
     }
     
     @Test
     public void testMultiChunks () throws IOException {
-        File file = new File(getWorkDir(), "input");
+        File file = new File(temp.newFolder(), "input");
         
         FileOutputStream out = new FileOutputStream(file);
         for (int i = 0; i < CHUNK_SIZE + 1; ++i) {
@@ -104,7 +115,7 @@ public class DefaultTransmitTextFilePreprocessorTest extends NbTestCase {
     
     @Test
     public void testPartialSepAtEnd () throws IOException {
-        File file = new File(getWorkDir(), "input");
+        File file = new File(temp.newFolder(), "input");
         
         FileOutputStream out = new FileOutputStream(file);
         for (int i = 0; i < CHUNK_SIZE; ++i) {
@@ -132,7 +143,7 @@ public class DefaultTransmitTextFilePreprocessorTest extends NbTestCase {
     
     @Test
     public void testPartialSepAtStart () throws IOException {
-        File file = new File(getWorkDir(), "input");
+        File file = new File(temp.newFolder(), "input");
         
         FileOutputStream out = new FileOutputStream(file);
         for (int i = 0; i < CHUNK_SIZE; ++i) {
@@ -160,7 +171,7 @@ public class DefaultTransmitTextFilePreprocessorTest extends NbTestCase {
     
     @Test
     public void testLineEndingsConversion () throws IOException {
-        File file = new File(getWorkDir(), "input");
+        File file = new File(temp.newFolder(), "input");
         
         FileOutputStream out = new FileOutputStream(file);
         for (int i = 0; i < CHUNK_SIZE + 2; ++i) {

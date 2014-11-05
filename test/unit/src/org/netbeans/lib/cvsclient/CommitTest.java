@@ -143,7 +143,7 @@ public class CommitTest extends TestCase {
         // check test matching golden file (here critical line from iz36288.out)
 
         InputStream actual = new FileInputStream(requestsLog);
-        LineNumberReader lineReader = new LineNumberReader(new InputStreamReader(actual, "utf8"));
+        LineNumberReader lineReader = new LineNumberReader(new InputStreamReader(actual, "UTF-8"));
         boolean foundConflictLine = false;
         String line = lineReader.readLine();
         StringBuffer sb = new StringBuffer();

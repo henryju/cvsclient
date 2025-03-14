@@ -27,6 +27,11 @@ steps:
     goals: 'package'
     options: '-DskipTests'
     sonarQubeRunAnalysis: true
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'My Local SQS (User)'
+    scannerMode: 'other'
+    extraProperties: 'sonar.projectKey=test'
 - task: SonarQubePublish@7
   inputs:
     pollingTimeoutSec: '300'    

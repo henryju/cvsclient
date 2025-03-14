@@ -10,6 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'My Local SQS'
+    scannerMode: 'other'
+    extraProperties: 'sonar.projectKey=test'
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
@@ -21,4 +26,5 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     options: '-DskipTests'
+    sonarQubeRunAnalysis: true
 

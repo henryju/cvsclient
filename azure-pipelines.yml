@@ -27,4 +27,7 @@ steps:
     goals: 'package'
     options: '-DskipTests'
     sonarQubeRunAnalysis: true
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'    
 

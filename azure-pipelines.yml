@@ -14,7 +14,7 @@ steps:
   inputs:
     SonarQube: 'SonarQube Cloud US'
     scannerMode: 'other'
-    extraProperties: 'sonar.projectKey=henryju-test_test-azdo sonar.organization=henryju-test' 
+    extraProperties: '-Dsonar.projectKey=henryju-test_test-azdo -Dsonar.organization=henryju-test' 
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
